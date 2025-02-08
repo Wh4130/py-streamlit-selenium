@@ -16,6 +16,10 @@ with st.echo():
     from selenium.webdriver.chrome.service import Service
     from webdriver_manager.chrome import ChromeDriverManager
     from webdriver_manager.core.os_manager import ChromeType
+    from selenium.webdriver.common.by import By
+    import time
+    import re
+    import pandas as pd
 
     @st.cache_resource
     def get_driver():
@@ -30,7 +34,51 @@ with st.echo():
     options.add_argument("--disable-gpu")
     options.add_argument("--headless")
 
-    driver = get_driver()
-    driver.get("https://antique-turn-ad4.notion.site/Wally-Huang-Lin-Chun-182965318fa7804c86bdde557fa376f4")
+    try:
+        driver = get_driver()                             # *** On streamlit cloud
+    except:
+        driver = webdriver.Chrome()
+    driver.get("https://www.cna.com.tw/list/aipl.aspx")   # *** On local
 
-    st.code(driver.page_source)
+
+    # * load all news
+    while True:
+        try:
+            driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            driver.find_element(By.XPATH, '//*[@id="SiteContent_uiViewMoreBtn"]').click()
+        except:
+            try:
+                driver.find_element(By.XPATH, '//*[@id="SiteContent_uiViewMoreBtn_Style3"]').click()
+            except:
+                break
+
+    # * scarping all li tag
+    container = driver.find_element(By.ID, 'jsMainList')
+    elements = container.find_elements(By.TAG_NAME, 'li')
+
+    result = pd.DataFrame()
+
+    for li in elements:
+        news_info = li.find_element(By.TAG_NAME, 'a').text
+        title, timestamp = re.search(r"(.*)(\d{4}/\d{2}/\d{2} \d{2}:\d{2})", news_info, re.DOTALL).groups()
+        url = li.find_element(By.TAG_NAME, 'a').get_attribute('href')
+        result.loc[len(result), ['title', 'timestamp', 'url']] = [title.strip(), timestamp, url]
+    
+    st.dataframe(result)
+    driver.quit()
+
+    for _, row in result.iterrows():
+        try:
+            driver = get_driver()                             
+        except:
+            driver = webdriver.Chrome()
+
+        driver.get(result.loc[_, 'url'])
+        content = driver.find_element(By.CLASS_NAME, 'paragraph').text
+        result.loc[_, 'content'] = content
+
+        driver.quit()
+    
+    st.dataframe(result)
+    # st.write(result.loc[0, 'url'])
+    
