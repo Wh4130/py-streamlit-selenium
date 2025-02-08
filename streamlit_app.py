@@ -10,7 +10,8 @@ This is a minimal, reproducible example of how to scrape the web with Selenium a
 Fork this repo, and edit `/streamlit_app.py` to customize this app to your heart's desire. :heart:
 """
 
-with st.echo():
+
+if st.button("點擊開始爬蟲"):
     from selenium import webdriver
     from selenium.webdriver.chrome.options import Options
     from selenium.webdriver.chrome.service import Service
@@ -63,7 +64,7 @@ with st.echo():
         title, timestamp = re.search(r"(.*)(\d{4}/\d{2}/\d{2} \d{2}:\d{2})", news_info, re.DOTALL).groups()
         url = li.find_element(By.TAG_NAME, 'a').get_attribute('href')
         result.loc[len(result), ['title', 'timestamp', 'url']] = [title.strip(), timestamp, url]
-    
+
     st.dataframe(result)
     driver.quit()
 
@@ -78,7 +79,7 @@ with st.echo():
         result.loc[_, 'content'] = content
 
         driver.quit()
-    
+
     st.dataframe(result)
     # st.write(result.loc[0, 'url'])
-    
+        
