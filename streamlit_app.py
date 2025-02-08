@@ -31,6 +31,6 @@ with st.echo():
     options.add_argument("--headless")
 
     driver = get_driver()
-    driver.get("https://ithelp.ithome.com.tw/articles/10280729")
+    driver.get("https://antique-turn-ad4.notion.site/Wally-Huang-Lin-Chun-182965318fa7804c86bdde557fa376f4")
 
     st.code(driver.page_source)
