@@ -31,6 +31,6 @@ with st.echo():
     options.add_argument("--headless")
 
     driver = get_driver()
-    driver.get("https://demand-foresight-theme-based-report-generator-7d32y4wrfnhpobtb.streamlit.app/")
+    driver.get("https://ithelp.ithome.com.tw/articles/10280729")
 
     st.code(driver.page_source)
