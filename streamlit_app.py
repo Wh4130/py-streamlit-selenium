@@ -11,6 +11,8 @@ Fork this repo, and edit `/streamlit_app.py` to customize this app to your heart
 """
 
 
+
+
 if st.button("點擊開始爬蟲"):
     from selenium import webdriver
     from selenium.webdriver.chrome.options import Options
@@ -36,7 +38,7 @@ if st.button("點擊開始爬蟲"):
     options.add_argument("--headless")
 
     try:
-        driver = get_driver()                             # *** On streamlit cloud
+        driver = get_driver()        # *** On streamlit cloud
         driver.get("https://www.cna.com.tw/list/aipl.aspx")   
     except:
         driver = webdriver.Chrome()  # *** On local
@@ -69,20 +71,23 @@ if st.button("點擊開始爬蟲"):
         result.loc[len(result), ['title', 'timestamp', 'url']] = [title.strip(), timestamp, url]
 
     st.dataframe(result)
-    driver.quit()
+    # driver.quit()
 
     for _, row in result.iterrows():
-        try:
-            driver = get_driver()                             
-        except:
-            driver = webdriver.Chrome()
+        # try:
+        #     driver = get_driver()                             
+        # except:
+        #     driver = webdriver.Chrome()
 
         driver.get(result.loc[_, 'url'])
         content = driver.find_element(By.CLASS_NAME, 'paragraph').text
         result.loc[_, 'content'] = content
 
-        driver.quit()
+        # driver.quit()
 
     st.dataframe(result)
-    # st.write(result.loc[0, 'url'])
+    driver.quit()
+
+if st.button("reload"):
+    st.cache_resource.clear()
         
