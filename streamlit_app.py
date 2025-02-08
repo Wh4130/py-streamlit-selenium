@@ -37,9 +37,12 @@ if st.button("點擊開始爬蟲"):
 
     try:
         driver = get_driver()                             # *** On streamlit cloud
+        driver.get("https://www.cna.com.tw/list/aipl.aspx")   
     except:
-        driver = webdriver.Chrome()
-    driver.get("https://www.cna.com.tw/list/aipl.aspx")   # *** On local
+        driver = webdriver.Chrome()  # *** On local
+        driver.get("https://www.cna.com.tw/list/aipl.aspx")   
+
+    
 
 
     # * load all news
