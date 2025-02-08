@@ -24,7 +24,7 @@ if st.button("點擊開始爬蟲"):
     import re
     import pandas as pd
 
-    @st.cache_resource
+    # @st.cache_resource
     def get_driver():
         return webdriver.Chrome(
             service=Service(
