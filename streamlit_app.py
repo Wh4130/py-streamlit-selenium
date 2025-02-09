@@ -70,6 +70,7 @@ while True:
 
 
 # * scarping all li tag
+driver.implicitly_wait(10)
 container = driver.find_element(By.ID, 'jsMainList')
 elements = container.find_elements(By.TAG_NAME, 'li')
 
