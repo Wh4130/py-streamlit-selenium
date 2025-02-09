@@ -91,12 +91,16 @@ if st.button("點擊開始爬蟲"):
             #     driver = webdriver.Chrome()
 
                 driver.get(result.loc[_, 'url'])
-                time.sleep(0.2)
+                body = driver.find_element(By.CLASS_NAME, 'article')
                 try:
-                    content = driver.find_elements(By.CLASS_NAME, 'paragraph')[0].text
+                    content = body.find_elements(By.CLASS_NAME, 'paragraph')[0].text
                 except:
-                    content = driver.find_elements(By.XPATH, '//*[@id="scrollable"]/div[1]/div[1]/div/div[2]/article/div/div/div[1]/div[6]')[0].text
-                    
+                    try:
+                        content = body.find_elements(By.XPATH, '//*[@id="scrollable"]/div[1]/div[1]/div/div[2]/article/div/div/div[1]/div[6]')[0].text
+                    except:
+                        content = body.find_elements(By.XPATH, '//*[@id="scrollable"]/div[1]/div[1]/div/div[2]/article/div/div/div[1]/div[5]')[0].text
+                
+                
                 result.loc[_, 'content'] = content
                 st.dataframe(result[['title', 'content', 'timestamp', 'url']])
             bar.progress((_ + 1) / len(result), f"({round((_ + 1) / len(result) * 100)}%) scraping...")
