@@ -92,7 +92,7 @@ if st.button("點擊開始爬蟲"):
 
                 driver.get(result.loc[_, 'url'])
                 time.sleep(0.2)
-                content = driver.find_element(By.CLASS_NAME, 'paragraph').text
+                content = driver.find_elements(By.CLASS_NAME, 'paragraph')[0].text
                 result.loc[_, 'content'] = content
                 st.dataframe(result[['title', 'content', 'timestamp', 'url']])
             bar.progress((_ + 1) / len(result), f"({round((_ + 1) / len(result) * 100)}%) scraping...")
