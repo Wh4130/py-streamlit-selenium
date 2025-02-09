@@ -1,6 +1,9 @@
 import streamlit as st
 from managers import *
 import os
+from dotenv import load_dotenv
+
+
 
 """
 ## Web scraping on Streamlit Cloud with Selenium

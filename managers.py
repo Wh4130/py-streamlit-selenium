@@ -14,6 +14,8 @@ import datetime as dt
 import random
 import string
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 class SheetManager:
 
