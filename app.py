@@ -40,6 +40,14 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeType
 
+import os
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeType
+
 def get_driver():
     # Set Chrome options
     options = Options()
@@ -53,12 +61,13 @@ def get_driver():
     chrome_bin = "/opt/render/project/.render/chrome/opt/google/chrome/google-chrome"  # Path where Chrome is installed
     options.binary_location = chrome_bin
 
-    # Get the correct version of ChromeDriver for the installed Chrome version (133 in your case)
-    chromedriver_path = ChromeDriverManager(version="133.0.6943.53", chrome_type=ChromeType.CHROMIUM).install()
+    # Automatically use the correct version of ChromeDriver
+    chromedriver_path = ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()
     service = ChromeService(executable_path=chromedriver_path)
 
     # Return the Chrome WebDriver
     return webdriver.Chrome(service=service, options=options)
+
 
 
 try:
