@@ -1,3 +1,10 @@
-streamlit
 seleniumbase
 webdriver-manager
+streamlit
+pandas
+gspread
+oauth2client
+python-dotenv
+pypdf
+requests
+google-generativeai

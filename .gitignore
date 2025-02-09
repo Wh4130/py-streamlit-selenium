@@ -1,2 +1,5 @@
 .venv/
 .streamlit/secrets.toml
+.env
+credits.json
+chromedriver
