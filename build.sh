@@ -1,16 +1,22 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# exit on error
+set -o errexit
 
-# Install Google Chrome (Pre-built binary)
-wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -P /tmp
-dpkg -i /tmp/google-chrome-stable_current_amd64.deb
-apt-get install -f  # Automatically install any missing dependencies (without sudo)
+STORAGE_DIR=/opt/render/project/.render
 
-# Install ChromeDriver (Pre-built binary)
-CHROME_VERSION=$(google-chrome --version | awk '{print $3}' | cut -d '.' -f 1)
-LATEST_DRIVER=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
-wget -N "https://chromedriver.storage.googleapis.com/$LATEST_DRIVER/chromedriver_linux64.zip" -P /tmp
-unzip /tmp/chromedriver_linux64.zip -d /tmp
-mv /tmp/chromedriver /usr/local/bin/
-chmod +x /usr/local/bin/chromedriver
+if [[ ! -d $STORAGE_DIR/chrome ]]; then
+  echo "...Downloading Chrome"
+  mkdir -p $STORAGE_DIR/chrome
+  cd $STORAGE_DIR/chrome
+  wget -P ./ https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  dpkg -x ./google-chrome-stable_current_amd64.deb $STORAGE_DIR/chrome
+  rm ./google-chrome-stable_current_amd64.deb
+  cd $HOME/project/src # Make sure we return to where we were
+else
+  echo "...Using Chrome from cache"
+fi
 
-echo "✅ Google Chrome and ChromeDriver installed successfully!"
+# be sure to add Chromes location to the PATH as part of your Start Command
+# export PATH="${PATH}:/opt/render/project/.render/chrome/opt/google/chrome"
+
+# add your own build commands...
