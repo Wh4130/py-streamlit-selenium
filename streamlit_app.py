@@ -91,9 +91,9 @@ if st.button("點擊開始爬蟲"):
             #     driver = webdriver.Chrome()
 
                 driver.get(result.loc[_, 'url'])
-                driver.implicitly_wait(5)
+                driver.implicitly_wait(20)
                 body = driver.find_element(By.CLASS_NAME, 'article')
-                driver.implicitly_wait(5)
+                driver.implicitly_wait(20)
                 content = body.find_elements(By.CLASS_NAME, 'paragraph')[0].text
                
                     
