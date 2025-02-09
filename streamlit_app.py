@@ -38,6 +38,7 @@ if st.button("點擊開始爬蟲"):
     options = Options()
     options.add_argument("--disable-gpu")
     options.add_argument("--headless")
+    options.add_argument('--no-sandbox')
 
     try:
         driver = get_driver()        # *** On streamlit cloud
@@ -86,10 +87,6 @@ if st.button("點擊開始爬蟲"):
         for _, row in result.iterrows():
             BOX.empty()
             with BOX.container():
-            # try:
-            #     driver = get_driver()                             
-            # except:
-            #     driver = webdriver.Chrome()
                 time.sleep(random.uniform(1,5))
                 driver.get(result.loc[_, 'url'])
                 driver.implicitly_wait(20)
