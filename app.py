@@ -32,20 +32,34 @@ import pandas as pd
 client = SheetManager.authenticate_google_sheets()
 
 # @st.cache_resource
-def get_driver():
-    return webdriver.Chrome(
-        service=Service(
-            ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()
-        ),
-        options=options,
-    )
+import os
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeType
 
-options = Options()
-options.add_argument("--disable-gpu")
-options.add_argument("--headless")
-options.add_argument('--disable-dev-shm-usage')
-options.add_argument('--no-sandbox')
-options.add_argument('--remote-debugging-port=9222') 
+def get_driver():
+    # Set Chrome options
+    options = Options()
+    options.add_argument("--disable-gpu")
+    options.add_argument("--headless")  # Required for cloud deployment
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--remote-debugging-port=9222")
+
+    # Path to the Chrome binary (as installed in Render)
+    chrome_bin = "/opt/render/project/.render/chrome/opt/google/chrome/google-chrome"  # Path where Chrome is installed
+    options.binary_location = chrome_bin
+
+    # Initialize ChromeDriver using ChromeDriverManager and the Service object
+    chromedriver_path = ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()
+    service = ChromeService(executable_path=chromedriver_path)
+
+    # Return the Chrome WebDriver
+    return webdriver.Chrome(service=service, options=options)
+
 
 try:
     driver = get_driver()        # *** On streamlit cloud
