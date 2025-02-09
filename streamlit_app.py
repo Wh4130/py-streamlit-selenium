@@ -43,6 +43,8 @@ if st.button("點擊開始爬蟲"):
         driver.get("https://www.cna.com.tw/list/aall.aspx")   
     except:
         driver = webdriver.Chrome()  # *** On local
+        driver.get("https://www.cna.com.tw/list/aall.aspx")   
+
 
     
 
@@ -89,11 +91,12 @@ if st.button("點擊開始爬蟲"):
             #     driver = webdriver.Chrome()
 
                 driver.get(result.loc[_, 'url'])
+                time.sleep(0.2)
                 content = driver.find_element(By.CLASS_NAME, 'paragraph').text
                 result.loc[_, 'content'] = content
                 st.dataframe(result[['title', 'content', 'timestamp', 'url']])
             bar.progress((_ + 1) / len(result), f"({round((_ + 1) / len(result) * 100)}%) scraping...")
-            time.sleep(0.4)
+            
 
         # driver.quit()
     bar.empty()
