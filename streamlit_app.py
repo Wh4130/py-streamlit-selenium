@@ -91,14 +91,12 @@ if st.button("點擊開始爬蟲"):
             #     driver = webdriver.Chrome()
 
                 driver.get(result.loc[_, 'url'])
+                driver.implicitly_wait(1)
                 body = driver.find_element(By.CLASS_NAME, 'article')
-                try:
-                    content = body.find_elements(By.CLASS_NAME, 'paragraph')[0].text
-                except:
-                    try:
-                        content = body.find_elements(By.XPATH, '//*[@id="scrollable"]/div[1]/div[1]/div/div[2]/article/div/div/div[1]/div[6]')[0].text
-                    except:
-                        content = body.find_elements(By.XPATH, '//*[@id="scrollable"]/div[1]/div[1]/div/div[2]/article/div/div/div[1]/div[5]')[0].text
+                driver.implicitly_wait(1)
+                content = body.find_elements(By.CLASS_NAME, 'paragraph')[0].text
+               
+                    
                 
                 
                 result.loc[_, 'content'] = content
