@@ -23,6 +23,7 @@ if st.button("點擊開始爬蟲"):
     from selenium.webdriver.common.by import By
     import time
     import re
+    import random
     import pandas as pd
 
     # @st.cache_resource
@@ -89,7 +90,7 @@ if st.button("點擊開始爬蟲"):
             #     driver = get_driver()                             
             # except:
             #     driver = webdriver.Chrome()
-
+                time.sleep(random.uniform(2,7))
                 driver.get(result.loc[_, 'url'])
                 driver.implicitly_wait(20)
                 body = driver.find_element(By.CLASS_NAME, 'article')
