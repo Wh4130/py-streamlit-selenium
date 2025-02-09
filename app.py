@@ -62,7 +62,7 @@ def get_driver():
     options.binary_location = chrome_bin
 
     # Automatically use the correct version of ChromeDriver
-    chromedriver_path = ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()
+    chromedriver_path = ChromeDriverManager().install()
     service = ChromeService(executable_path=chromedriver_path)
 
     # Return the Chrome WebDriver
