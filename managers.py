@@ -15,7 +15,6 @@ class ChromeDriverManager:
     options.add_argument("--disable-gpu")
     options.add_argument("--headless")
     
-    @st.cache_resource
     def install_driver():
         return webdriver.Chrome(
             service=Service(
