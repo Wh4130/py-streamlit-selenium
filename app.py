@@ -53,8 +53,8 @@ def get_driver():
     chrome_bin = "/opt/render/project/.render/chrome/opt/google/chrome/google-chrome"  # Path where Chrome is installed
     options.binary_location = chrome_bin
 
-    # Initialize ChromeDriver using ChromeDriverManager and the Service object
-    chromedriver_path = ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()
+    # Get the correct version of ChromeDriver for the installed Chrome version (133 in your case)
+    chromedriver_path = ChromeDriverManager(version="133.0.6943.53", chrome_type=ChromeType.CHROMIUM).install()
     service = ChromeService(executable_path=chromedriver_path)
 
     # Return the Chrome WebDriver
