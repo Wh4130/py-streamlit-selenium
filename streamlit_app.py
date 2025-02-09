@@ -93,6 +93,7 @@ if st.button("點擊開始爬蟲"):
                 result.loc[_, 'content'] = content
                 st.dataframe(result[['title', 'content', 'timestamp', 'url']])
             bar.progress((_ + 1) / len(result), f"({round((_ + 1) / len(result) * 100)}%) scraping...")
+            time.sleep(0.4)
 
         # driver.quit()
     bar.empty()
