@@ -19,7 +19,7 @@ class SheetManager:
     @staticmethod
     def authenticate_google_sheets():
         scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-        creds = ServiceAccountCredentials.from_json_keyfile_dict(json.loads(dotenv_values()['GS_KEYS']), scope)
+        creds = ServiceAccountCredentials.from_json_keyfile_dict(json.loads(st.secrets['GS_KEYS']), scope)
         client = gspread.authorize(creds)
         return client
     
