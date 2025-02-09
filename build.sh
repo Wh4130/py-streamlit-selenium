@@ -6,4 +6,4 @@ apt-get update
 apt-get install -y ./google-chrome-stable_current_amd64.deb
 rm google-chrome-stable_current_amd64.deb
 
-echo "✅ Google Chrome installed successfully!"
+echo "✅ Google Chrome installed successfully"
